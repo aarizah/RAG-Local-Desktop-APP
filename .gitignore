@@ -1,0 +1,26 @@
+models/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# APIS and secrets
+API_KEYS.md
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs
+.vscode
+.idea
+.cursorrules
+.cursor
