@@ -74,6 +74,13 @@ class DoclingPdfChunkingAdapter:
         values = [str(h).strip() for h in headings if str(h).strip()]
         return values or None
 
+    @staticmethod
+    def _compose_index_text(*, headings: list[str] | None, body: str) -> str:
+        if not headings:
+            return body
+        prefix = " > ".join(headings)
+        return f"{prefix}\n{body}"
+
     def chunk(self, *, document_id: str, version: int, source_path: str) -> list[Chunk]:
         result = self.converter.convert(source=str(source_path))
         document = getattr(result, "document", result)
@@ -88,6 +95,7 @@ class DoclingPdfChunkingAdapter:
             meta = getattr(raw_chunk, "meta", None)
             pages = self._extract_pages(meta)
             headings = self._extract_headings(meta)
+            index_text = self._compose_index_text(headings=headings, body=text)
             chunks.append(
                 Chunk(
                     document_id=document_id,
@@ -99,7 +107,7 @@ class DoclingPdfChunkingAdapter:
                     first_page=min(pages) if pages else None,
                     headings=headings,
                     created_at=created_at,
-                    text=text,
+                    text=index_text,
                 )
             )
 

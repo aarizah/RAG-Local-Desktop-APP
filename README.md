@@ -1,6 +1,8 @@
 ### Local RAG Knowledge Copilot
 
-Web-based local-first platform for ingesting PDF documents, indexing their content, and answering questions with citations using a Retrieval-Augmented Generation pipeline that runs on local infrastructure.
+**Local-first web application** for ingesting PDF documents, indexing their content, and answering questions with citations using a Retrieval-Augmented Generation pipeline that runs on local infrastructure.
+
+This is **not a native desktop app** (no Electron/Tauri wrapper). You run a FastAPI backend and a React web UI in the browser (`localhost`). Inference, storage, and retrieval stay on your machine; the interface is a standard web app served locally.
 
 The project addresses a real-world problem: teams often need to consult internal manuals, contracts, policies, technical documents, or regulatory PDFs without sending sensitive information to external AI services or relying on keyword search alone.
 
@@ -107,7 +109,7 @@ Pydantic models define the API contracts for ingestion, querying, document listi
 
 ### Local Infrastructure
 
-The service persists vector data in ChromaDB and lexical/index metadata in SQLite. PDF files are read from a local `s3` directory or uploaded through the browser.
+The service persists vector data in ChromaDB and lexical/index metadata in SQLite under `core/data/`. PDF files are read from `core/s3/` or uploaded through the browser. **These paths are gitignored** — indexes and uploaded documents are created locally at runtime and are not part of the repository.
 
 ### Quality Assurance
 

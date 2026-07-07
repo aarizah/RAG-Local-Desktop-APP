@@ -66,9 +66,39 @@ class SqliteFtsRepository:
 
     @staticmethod
     def _sanitize_fts_query(query: str) -> str:
-        """Strip FTS5 special characters so raw natural-language queries don't crash the parser."""
-        tokens = re.sub(r"[^\w\s]", " ", query, flags=re.UNICODE).split()
-        return " ".join(tokens) if tokens else '""'
+        """Build an OR-based FTS5 query from meaningful query tokens."""
+        stopwords = {
+            "a",
+            "al",
+            "como",
+            "con",
+            "cual",
+            "de",
+            "del",
+            "el",
+            "en",
+            "es",
+            "la",
+            "las",
+            "lo",
+            "los",
+            "o",
+            "para",
+            "por",
+            "puede",
+            "que",
+            "se",
+            "ser",
+            "un",
+            "una",
+            "uno",
+            "y",
+        }
+        tokens = re.sub(r"[^\w\s]", " ", query, flags=re.UNICODE).lower().split()
+        meaningful = [token for token in tokens if len(token) > 2 and token not in stopwords]
+        if not meaningful:
+            return '""'
+        return " OR ".join(meaningful)
 
     def search(self, query: str, limit: int = 10) -> list[RetrievedChunkV1]:
         fts_query = self._sanitize_fts_query(query)

@@ -1,5 +1,14 @@
 models/
 
+# Local runtime data (ChromaDB, SQLite, indexes)
+core/data/*
+!core/data/.gitkeep
+
+# Uploaded / ingested PDFs (local only)
+core/s3/*
+!core/s3/.gitkeep
+core/s3/*.pdf
+
 # Python-generated files
 __pycache__/
 *.py[oc]

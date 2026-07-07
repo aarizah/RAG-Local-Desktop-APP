@@ -39,7 +39,7 @@ class Settings(BaseSettings):
 
     rag_candidate_k: int = Field(default=30, alias="RAG_CANDIDATE_K")
     rag_rerank_k: int = Field(default=10, alias="RAG_RERANK_K")
-    rag_final_k: int = Field(default=1, alias="RAG_FINAL_K")
+    rag_final_k: int = Field(default=5, alias="RAG_FINAL_K")
     rag_semantic_threshold: float = Field(default=0.0, alias="RAG_SEMANTIC_THRESHOLD")
     rag_rrf_k: int = Field(default=60, alias="RAG_RRF_K")
     rerank_strategy: str = Field(default="cross_encoder", alias="RERANK_STRATEGY")
